@@ -4,7 +4,9 @@ import { hot } from 'bootstrap-hot-loader';
 import wixExpressCsrf from '@wix/wix-express-csrf';
 import wixExpressRequireHttps from '@wix/wix-express-require-https';
 import * as WixNodeI18nCache from 'wix-node-i18n-cache';
-import {renderAppHtmlToString} from './page';
+import { renderAppHtmlToString } from './page';
+import { FetchersResources } from './hooks/use-fetcher';
+import serialize from 'serialize-javascript';
 
 // caches translation files and serves them per request
 // https://github.com/wix-private/wix-node-i18n-cache
@@ -37,10 +39,15 @@ export default hot(module, (app: Router, context) => {
   app.get('/', async (req, res) => {
     // Extract some data from every incoming request.
     const renderModel = getRenderModel(req);
-    const appHtml = await renderAppHtmlToString();
+    const fethchersResources: FetchersResources = { fethchersResources: {} };
+    const appHtml = await renderAppHtmlToString(fethchersResources);
 
     // Send a response back to the client.
-    res.renderView('./index.ejs', {...renderModel, appHtml});
+    res.renderView('./index.ejs', {
+      ...renderModel,
+      appHtml,
+      fethchersResources: serialize(fethchersResources, { isJSON: true }),
+    });
   });
 
   function getRenderModel(req: Request) {

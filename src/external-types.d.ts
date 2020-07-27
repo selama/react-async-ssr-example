@@ -6,6 +6,7 @@ interface Window {
   __LOCALE__: string;
   __BASEURL__: string;
   __MESSAGES__: Messages;
+  __FETCHERS_RESOURCES__: FetchersResources;
 }
 
 // tslint:disable-next-line:no-namespace
