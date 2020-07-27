@@ -1,0 +1,11 @@
+{
+    "appName": "react-async-ssr-example",
+    "notifications": {
+      "slack_channels": [
+        "fedops-urgent-default"
+      ]
+    },
+    "deploy_annotations": [
+      "react-async-ssr-example"
+    ]
+  }
