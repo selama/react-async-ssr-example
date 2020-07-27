@@ -4,6 +4,7 @@ import { hot } from 'bootstrap-hot-loader';
 import wixExpressCsrf from '@wix/wix-express-csrf';
 import wixExpressRequireHttps from '@wix/wix-express-require-https';
 import * as WixNodeI18nCache from 'wix-node-i18n-cache';
+import {renderAppHtmlToString} from './page';
 
 // caches translation files and serves them per request
 // https://github.com/wix-private/wix-node-i18n-cache
@@ -33,12 +34,13 @@ export default hot(module, (app: Router, context) => {
   app.use(context.renderer.middleware());
 
   // Define a route to render our initial HTML.
-  app.get('/', (req, res) => {
+  app.get('/', async (req, res) => {
     // Extract some data from every incoming request.
     const renderModel = getRenderModel(req);
+    const appHtml = await renderAppHtmlToString();
 
     // Send a response back to the client.
-    res.renderView('./index.ejs', renderModel);
+    res.renderView('./index.ejs', {...renderModel, appHtml});
   });
 
   function getRenderModel(req: Request) {

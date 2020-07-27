@@ -16,7 +16,7 @@
     <script src="https://<%= staticsDomain %>/unpkg/react-dom@16.12.0/umd/react-dom<% if (!debug) { %>.production.min<% } else { %>.development<% } %>.js"></script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><%- appHtml %></div>
     <script>
       window.__BASEURL__ = '<%= basename %>';
       window.__LOCALE__ = '<%= language %>';

@@ -17,3 +17,4 @@ declare namespace Express {
 
 declare module 'yoshi-template-intro';
 declare module 'wix-node-i18n-cache';
+declare module 'react-async-ssr';
